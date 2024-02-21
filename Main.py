@@ -2,7 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 # Read the CSV file into a pandas DataFrame
-cyber_sec_atk = pd.read_csv('data/cybersecurity_attacks.csv')
+cyber_sec_atk = pd.read_csv('data/cybersecurity_attacks.csv') #depending on your file location
 
 # Set display options to show all columns and limit rows
 pd.set_option('display.max_columns', None)
