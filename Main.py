@@ -23,8 +23,6 @@ frequency_table = frequency_table.sort_values(by='Value')
 print(frequency_table)
 
 #Bar chart
-#Change the 'x_column' and 'y_column' to the columns that we want to plot
-# Set display options to show all columns and limit rows
 # Prompt the user to input the column name
 column_name = input("Enter the column name for which you want to create a frequency distribution: ")
 
@@ -40,8 +38,24 @@ plt.title('Bar Chart of Frequency Grouped by ' + column_name)
 # Add labels on top of each bar
 for i, freq in enumerate(grouped):
     ax.text(i, freq + 0.05, str(freq), ha='center', va='bottom')
-
 plt.show()
 
+#Pie Chart
+# Prompt the user to input the column name
+column_name = input("Enter the column name for which you want to create a pie chart: ")
+
+# Check if the entered column name exists in the DataFrame
+if column_name not in cyber_sec_atk.columns:
+    print("Column '{}' not found in the DataFrame.".format(column_name))
+else:
+    # Count the frequency of each category in the specified column
+    value_counts = cyber_sec_atk[column_name].value_counts()
+
+    # Plotting
+    plt.figure(figsize=(8, 8))
+    plt.pie(value_counts, labels=value_counts.index, autopct='%1.1f%%', startangle=140)
+    plt.title('Pie Chart of {}'.format(column_name))
+    plt.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
+    plt.show()
 
 
