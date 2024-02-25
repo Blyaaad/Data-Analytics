@@ -57,5 +57,26 @@ else:
     plt.title('Pie Chart of {}'.format(column_name))
     plt.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
     plt.show()
+  
+#Histogram
+# Prompt the user to input the column name
+column_name = input("Enter the column name for which you want to create a histogram: ")
 
+# Check if the entered column name exists in the DataFrame
+if column_name not in cyber_sec_atk.columns:
+    print("Column '{}' not found in the DataFrame.".format(column_name))
+else:
+    # Plotting
+    plt.figure(figsize=(10, 6))
+    n, bins, patches = plt.hist(cyber_sec_atk[column_name], bins='auto', color='skyblue', edgecolor='black')  # 'auto' selects the number of bins automatically
+    plt.title('Histogram of {}'.format(column_name))
+    plt.xlabel(column_name)
+    plt.ylabel('Frequency')
+    plt.grid(True)
 
+    # Add frequency on top of each bar
+    for i, freq in enumerate(n):
+        if freq != 0:
+            plt.text(bins[i] + (bins[i + 1] - bins[i]) / 2, freq, str(int(freq)), ha='center', va='bottom')
+
+    plt.show()
