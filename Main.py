@@ -82,22 +82,6 @@ else:
             plt.text(bins[i] + (bins[i + 1] - bins[i]) / 2, freq, str(int(freq)), ha='center', va='bottom')
 
     plt.show()
-
-    # Prompt the user to input the column name
-    column_name = input("Enter the column name for which you want to create a tree map: ")
-
-    # Check if the entered column name exists in the DataFrame
-    if column_name not in cyber_sec_atk.columns:
-        print("Column '{}' not found in the DataFrame.".format(column_name))
-    else:
-        # Count the frequency of each category in the specified column
-        value_counts = cyber_sec_atk[column_name].value_counts().reset_index()
-        value_counts.columns = ['Category', 'Frequency']
-
-        # Plotting Tree Map
-        fig = px.treemap(value_counts, path=['Category'], values='Frequency',
-                         title='Tree Map of {}'.format(column_name))
-        fig.show()
       
 #Tree Map
 # Prompt the user to input the column name
