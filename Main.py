@@ -1,8 +1,10 @@
 import pandas as pd
 import matplotlib.pyplot as plt
+import plotly.express as px
 
 # Read the CSV file into a pandas DataFrame
-cyber_sec_atk = pd.read_csv('cybersecurity_attacks.csv') #depending on your file location
+cyber_sec_atk = pd.read_csv('C:\Analytics\cybersecurity_attacks-cleaned.csv')
+#depending on your file location
 
 # Set display options to show all columns and limit rows
 pd.set_option('display.max_columns', None)
@@ -12,10 +14,10 @@ print(cyber_sec_atk.head(1001))
 
 #Single Variable tables and charts
 #Frequncy distribution table
-freq_column = input("What column would you want in the table? (Protocol, "
-                   "Packet Type, Traffic Type, Malware Indicators, Anomaly Scores, "
-                   "Attack Type, Attack Signature, Action Taken, Severity, Device Information, "
-                   "Network Segment, Firewall Logs, IDS/IPS Alerts, Log Source)")
+freq_column = input("What column would you want in the table? (\n*Protocol "
+                   "\n*Packet Type \n*Traffic Type \n*Malware Indicators \n*Anomaly Scores "
+                   "\n*Attack Type \n*Attack Signature \n*Action Taken \n*Severity \n*Device Information "
+                   "\n*Network Segment \n*Firewall Logs \n*IDS/IPS Alerts \n*Log Source)\n")
 frequency_table = cyber_sec_atk[freq_column].value_counts().reset_index()
 frequency_table.columns = ['Value', 'Frequency']
 # Sort the table based on the values (optional)
@@ -80,3 +82,19 @@ else:
             plt.text(bins[i] + (bins[i + 1] - bins[i]) / 2, freq, str(int(freq)), ha='center', va='bottom')
 
     plt.show()
+
+    # Prompt the user to input the column name
+    column_name = input("Enter the column name for which you want to create a tree map: ")
+
+    # Check if the entered column name exists in the DataFrame
+    if column_name not in cyber_sec_atk.columns:
+        print("Column '{}' not found in the DataFrame.".format(column_name))
+    else:
+        # Count the frequency of each category in the specified column
+        value_counts = cyber_sec_atk[column_name].value_counts().reset_index()
+        value_counts.columns = ['Category', 'Frequency']
+
+        # Plotting Tree Map
+        fig = px.treemap(value_counts, path=['Category'], values='Frequency',
+                         title='Tree Map of {}'.format(column_name))
+        fig.show()
