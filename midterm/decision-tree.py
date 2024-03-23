@@ -33,8 +33,10 @@ tree_rules = export_text(clf, feature_names=list(X.columns))
 
 # Output the rules
 print("Decision Tree Rules:")
-print(tree_rules)
 print("Accuracy: ", metrics.accuracy_score(y_test, y_pred))
+print("Precision:", metrics.precision_score(y_test, y_pred))
+print("Recall:", metrics.recall_score(y_test, y_pred))
+print("F1 Score:", metrics.f1_score(y_test, y_pred))
 
 # Plot the decision tree
 plt.figure(figsize=(20, 10))
