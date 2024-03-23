@@ -4,7 +4,7 @@ import pandas as pd
 import wittgenstein as lw
 
 # Read the dataset with specified column names
-df = pd.read_csv('shopzada_churn.csv', usecols=['Customer_ID', 'Age', 'Gender', 'Annual_Income', 'Total_Spend',
+df = pd.read_csv('data/shopzada_churn.csv', usecols=['Customer_ID', 'Age', 'Gender', 'Annual_Income', 'Total_Spend',
                                                  'Years_as_Customer', 'Num_of_Purchases', 'Average_Transaction_Amount',
                                                  'Num_of_Returns', 'Num_of_Support_Contacts', 'Satisfaction_Score',
                                                  'Last_Purchase_Days_Ago', 'Email_Opt_In', 'Promotion_Response',
@@ -31,7 +31,7 @@ except ValueError as e:
     print("Error:", e)
     exit()
 
-# Prepare test data
+# Prepare test prelim
 X_test = test.drop('Target_Churn', axis=1)
 y_test = test['Target_Churn']
 
