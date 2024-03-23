@@ -26,21 +26,29 @@ rf_classifier = RandomForestClassifier(n_estimators=100, random_state=42)
 rf_classifier.fit(X_train, y_train)
 
 # Predictions
+y_pred_train = rf_classifier.predict(X_train)
 y_pred_test = rf_classifier.predict(X_test)
 y_pred_unseen = rf_classifier.predict(X_unseen)
 
 # Model Evaluation
+accuracy_train = accuracy_score(y_train, y_pred_train)
 accuracy_test = accuracy_score(y_test, y_pred_test)
 accuracy_unseen = accuracy_score(y_unseen, y_pred_unseen)
 
+precision_train = precision_score(y_train, y_pred_train)
 precision_test = precision_score(y_test, y_pred_test)
 precision_unseen = precision_score(y_unseen, y_pred_unseen)
 
+recall_train = recall_score(y_train, y_pred_train)
 recall_test = recall_score(y_test, y_pred_test)
 recall_unseen = recall_score(y_unseen, y_pred_unseen)
 
+roc_auc_train = roc_auc_score(y_train, y_pred_train)
 roc_auc_test = roc_auc_score(y_test, y_pred_test)
 roc_auc_unseen = roc_auc_score(y_unseen, y_pred_unseen)
+
+# Confusion Matrix for training data
+conf_matrix_train = confusion_matrix(y_train, y_pred_train)
 
 # Confusion Matrix for testing data
 conf_matrix_test = confusion_matrix(y_test, y_pred_test)
@@ -48,46 +56,72 @@ conf_matrix_test = confusion_matrix(y_test, y_pred_test)
 # Confusion Matrix for unseen data
 conf_matrix_unseen = confusion_matrix(y_unseen, y_pred_unseen)
 
-# Plot ROC curve
+# Plot ROC curve for training data
+fpr_train, tpr_train, thresholds_train = roc_curve(y_train, y_pred_train)
+roc_auc_curve_train = auc(fpr_train, tpr_train)
+
+plt.figure()
+plt.plot(fpr_train, tpr_train, color='green', lw=2, label='ROC curve - Training Data (area = %0.2f)' % roc_auc_curve_train)
+plt.plot([0, 1], [0, 1], color='navy', lw=2, linestyle='--')
+plt.xlim([0.0, 1.0])
+plt.ylim([0.0, 1.05])
+plt.xlabel('False Positive Rate')
+plt.ylabel('True Positive Rate')
+plt.title('Random Forest ROC Curve - Training Data')
+plt.legend(loc="lower right")
+plt.show()
+
+# Plot ROC curve for testing data
 fpr_test, tpr_test, thresholds_test = roc_curve(y_test, y_pred_test)
 roc_auc_curve_test = auc(fpr_test, tpr_test)
 
+plt.figure()
+plt.plot(fpr_test, tpr_test, color='blue', lw=2, label='ROC curve - Testing Data (area = %0.2f)' % roc_auc_curve_test)
+plt.plot([0, 1], [0, 1], color='navy', lw=2, linestyle='--')
+plt.xlim([0.0, 1.0])
+plt.ylim([0.0, 1.05])
+plt.xlabel('False Positive Rate')
+plt.ylabel('True Positive Rate')
+plt.title('Random Forest ROC Curve - Testing Data')
+plt.legend(loc="lower right")
+plt.show()
+
+# Plot ROC curve for unseen data
 fpr_unseen, tpr_unseen, thresholds_unseen = roc_curve(y_unseen, y_pred_unseen)
 roc_auc_curve_unseen = auc(fpr_unseen, tpr_unseen)
 
 plt.figure()
-plt.plot(fpr_test, tpr_test, color='darkorange', lw=2, label='ROC curve (area = %0.2f)' % roc_auc_curve_test)
+plt.plot(fpr_unseen, tpr_unseen, color='darkorange', lw=2, label='ROC curve - Unseen Data (area = %0.2f)' % roc_auc_curve_unseen)
 plt.plot([0, 1], [0, 1], color='navy', lw=2, linestyle='--')
 plt.xlim([0.0, 1.0])
 plt.ylim([0.0, 1.05])
 plt.xlabel('False Positive Rate')
 plt.ylabel('True Positive Rate')
-plt.title('ROC Curve - Testing Data')
-plt.legend(loc="lower right")
-plt.show()
-
-plt.figure()
-plt.plot(fpr_unseen, tpr_unseen, color='darkorange', lw=2, label='ROC curve (area = %0.2f)' % roc_auc_curve_unseen)
-plt.plot([0, 1], [0, 1], color='navy', lw=2, linestyle='--')
-plt.xlim([0.0, 1.0])
-plt.ylim([0.0, 1.05])
-plt.xlabel('False Positive Rate')
-plt.ylabel('True Positive Rate')
-plt.title('ROC Curve - Unseen Data')
+plt.title('Random Forest ROC Curve - Unseen Data')
 plt.legend(loc="lower right")
 plt.show()
 
 # Display results
-print("Results for Testing Data:")
+print("Results for Training Data:")
+print("Random Forest")
+print("Confusion Matrix:\n", conf_matrix_train)
+print("Accuracy:", accuracy_train)
+print("Precision:", precision_train)
+print("Recall:", recall_train)
+print("ROC-AUC:", roc_auc_train)
+
+print("\nResults for Testing Data:")
+print("Random Forest")
+print("Confusion Matrix:\n", conf_matrix_test)
 print("Accuracy:", accuracy_test)
 print("Precision:", precision_test)
 print("Recall:", recall_test)
 print("ROC-AUC:", roc_auc_test)
-print("Confusion Matrix:\n", conf_matrix_test)
 
 print("\nResults for Unseen Data:")
+print("Random Forest")
+print("Confusion Matrix:\n", conf_matrix_unseen)
 print("Accuracy:", accuracy_unseen)
 print("Precision:", precision_unseen)
 print("Recall:", recall_unseen)
 print("ROC-AUC:", roc_auc_unseen)
-print("Confusion Matrix:\n", conf_matrix_unseen)
