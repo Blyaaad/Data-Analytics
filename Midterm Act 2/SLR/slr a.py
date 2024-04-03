@@ -26,13 +26,13 @@ unseen_predictions = model.predict(X_unseen)
 # Calculate R-squared score on the test set
 test_r2_score = model.score(X_test, y_test)
 print("R-squared score on the test set:", test_r2_score)
-'''
 
-#ITO LANG YUNG ILALAGAY SA TABLE A
 # Display coefficients
 print("Coefficient (slope):", model.coef_[0])
 print("Intercept:", model.intercept_)
+'''
 
+#ITO LANG YUNG ILALAGAY SA TABLE A
 # Display descriptive statistics of discount amounts
 discount_stats = pd.DataFrame(y_train, columns=['discount']).describe()
 print("\nDescriptive statistics of discount amounts:")
